@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Обращения{% endblock %}
+
+{% block content %}
+    <section class="py-5">
+        <div class="container py-5">
+            <div class="row mb-4 mb-lg-5">
+                <div class="col-md-8 col-xl-6 text-center mx-auto">
+                    <h2 class="fw-bold">Поступившие обращения</h2>
+                </div>
+            </div>
+            <div class="row mx-auto g-4">
+                {% for message in messages %}
+                    <div class="col">
+                        <div class="card border  text-center mb-3" style="max-width: 18rem; ">
+                            <div class="card-header" >{{ message.name }}</div>
+                            <div class="card-body">
+                                <p class="card-text text-dark">{{ message.email }}</p>
+                                <p class="card-text text-dark">{{ message.message }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

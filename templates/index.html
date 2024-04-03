@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+    <header class="bg-primary-gradient" style="padding-bottom: 0px;">
+        <div class="container pt-4 pt-xl-5">
+            <div class="row pt-1">
+                <div class="col-md-8 col-xl-6 text-center text-md-start mx-auto">
+                    <div class="text-center">
+                        <h1 class="fw-bold">Магазин для дачи</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Carousel wrapper -->
+<div id="carouselBasicExample" class="carousel slide carousel-fade" data-mdb-ride="carousel">
+
+  <!-- Inner -->
+  <div class="carousel-inner">
+    <!-- Single item -->
+    <div class="carousel-item active">
+      <img src="https://mdbcdn.b-cdn.net/img/Photos/Slides/img%20(15).webp" class="d-block w-100" alt="Sunset Over the City"/>
+      <div class="carousel-caption d-none d-md-block">
+        <h5>First slide label</h5>
+        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+      </div>
+    </div>
+
+
+</div>
+</div>
+<!-- Carousel wrapper -->
+
+    <section class="py-5" id="product-list">
+
+        <div class="container py-4 py-xl-5">
+            <div class="row mb-4 mb-lg-5">
+                <div class="col-md-8 col-xl-6 text-center mx-auto">
+                    <h2 class="fw-bold">Каталог товаров</h2>
+                </div>
+            </div>
+            <nav class="navbar navbar-light navbar-expand py-3">
+                <div class="container">
+                    <div class="collapse navbar-collapse" id="navcol-3">
+                        <ul class="navbar-nav mx-auto">
+                            <li {% if not category %} class="nav-item"{% endif %}>
+                                <a class="nav-link" href="/#product-list">Все</a>
+                            </li>
+                            {% for c in categories %}
+                                <li {% if category.slug == c.slug %}class="nav-item"
+                                    {% endif %}>
+                                    <a class="nav-link" href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3 infinite-container">
+                {% for product in products %}
+                <div class="col product infinite-item">
+                    <div class="card">
+                        <a href="{{ product.get_absolute_url }}">
+                            <img class="card-img-top w-100 d-block fit-cover" style="height: 200px;" src="{% if product.image %}{{ product.image.url }}{% else %}{% endif %}" alt="">
+                        </a>
+                        <div class="card-body p-4">
+                            <h4 href="{{ product.get_absolute_url }}" class="card-title text-truncate" style="max-width: 150px">{{ product.name }}</h4>
+                            <div class="text-sm-start text-truncate" style="max-width: 300px">
+                                {{ product.description }}
+                            </div>
+                            <h4 class="card-title">{{ product.price }}&#8381</h4>
+                            <div class="container">
+                                <div class="col-md-12 text-center">
+                                <a href="{{ product.get_absolute_url }}" >
+                                <input class="btn btn-primary btn-lg me-2 " role="button" type="submit" value="Подробнее">
+                            </a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

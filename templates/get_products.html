@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    {% for product in products %}
+    <div class="col-md-4 mb-4">
+      <div class="card">
+        <img src="{{ product.image_url }}" class="card-img-top" alt="{{ product.name }}">
+        <div class="card-body">
+          <h5 class="card-title">{{ product.name }}</h5>
+          <p class="card-text">{{ product.description }}</p>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+    <script>
+$(function() {
+  var limit = 6; // количество товаров в каждом запросе
+  var offset = 0; // смещение от начала списка товаров
+  $(window).scroll(function() {
+    if($(window).scrollTop() + $(window).height() === $(document).height()) {
+      $.ajax({
+        url: '/shop:index',
+        data: {offset: offset},
+        dataType: 'json',
+        success: function(response) {
+          var productsHtml = '';
+          response.products.forEach(function(product) {
+            productsHtml += '<div class="col-md-4 mb-4">';
+            productsHtml += '<div class="card">';
+            productsHtml += '<img src="' + product.image_url + '" class="card-img-top" alt="' + product.name + '">';
+            productsHtml += '<div class="card-body">';
+            productsHtml += '<h5 class="card-title">' + product.name + '</h5>';
+            productsHtml += '<p class="card-text">' + product.description + '</p>';
+            productsHtml += '</div>';
+            productsHtml += '</div>';
+            productsHtml += '</div>';
+          });
+          $('.row').append(productsHtml);
+          offset += limit;
+        }
+      });
+    }
+  });
+});
+</script>
+{% endblock %}
